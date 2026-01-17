@@ -1,15 +1,19 @@
 return {
   "saghen/blink.cmp",
-  dependencies = { "Kaiser-Yang/blink-cmp-avante", "rafamadriz/friendly-snippets" },
+  dependencies = { "rafamadriz/friendly-snippets" },
   opts = {
     keymap = {
       ["<S-Tab>"] = { "select_prev", "fallback" },
       ["<Tab>"] = { "select_next", "fallback" },
+      ["<A-y>"] = {
+        function(cmp)
+          cmp.show({ providers = { "minuet" } })
+        end,
+      },
     },
     sources = {
-      default = { "avante", "lsp", "path", "buffer", "minuet" },
+      default = { "lsp", "path", "buffer" },
       providers = {
-        avante = { module = "blink-cmp-avante", name = "Avante" },
         minuet = {
           name = "minuet",
           module = "minuet.blink",
