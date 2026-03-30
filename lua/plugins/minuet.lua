@@ -8,15 +8,15 @@ return {
         n_completions = 3,
         throttle = 1000, -- Increase to reduce costs and avoid rate limits
         debounce = 50, -- Increase to reduce costs and avoid rate limits
-        context_window = 32000,
+        context_window = 64000,
         provider_options = {
           openai_fim_compatible = {
             api_key = "TERM",
-            end_point = "https://llm.hnatekmar.dev/qwen-next-instruct/v1/completions",
-            model = "qwen-next-instruct",
+            end_point = "https://fast.hnatekmar.dev/v1/completions",
+            model = "Qwen/Qwen3-Coder-Next-FP8",
             name = "vllm",
             optional = {
-              max_tokens = 256,
+              max_tokens = 128,
               provider = {
                 -- Prioritize throughput for faster completion
                 sort = "throughput",
@@ -24,11 +24,15 @@ return {
             },
             template = {
               prompt = function(context_before_cursor, context_after_cursor, _)
-                return "<|fim_prefix|>"
-                  .. context_before_cursor
-                  .. "<|fim_suffix|>"
-                  .. context_after_cursor
-                  .. "<|fim_middle|>"
+                local parts = {}
+
+                table.insert(parts, "<|fim_prefix|>")
+                table.insert(parts, context_before_cursor)
+                table.insert(parts, "<|fim_suffix|>")
+                table.insert(parts, context_after_cursor)
+                table.insert(parts, "<|fim_middle|>")
+
+                return table.concat(parts, "") -- No extra spaces, tokens handle separation
               end,
               suffix = false,
             },
