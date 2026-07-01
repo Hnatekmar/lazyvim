@@ -9,6 +9,7 @@ return {
         throttle = 1000,
         debounce = 50,
         context_window = 32000,
+        add_single_line_entry = false,
         provider_options = {
           openai_compatible = {
             api_key = "TERM",
@@ -17,6 +18,9 @@ return {
             model = "deepseek-ai/DeepSeek-V4-Flash",
             name = "vllm",
             stream = true,
+            optional = {
+              max_tokens = 256,
+            },
           },
         },
       })

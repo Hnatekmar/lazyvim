@@ -21,7 +21,7 @@ return {
           name = "minuet",
           module = "minuet.blink",
           async = true,
-          timeout_ms = 3000,
+          timeout_ms = 8000,
           score_offset = 50,
         },
       },
