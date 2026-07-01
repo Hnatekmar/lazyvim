@@ -11,6 +11,9 @@ return {
         end,
       },
     },
+    completion = {
+      trigger = { prefetch_on_insert = false },
+    },
     sources = {
       default = { "lsp", "path", "buffer" },
       providers = {
@@ -19,10 +22,9 @@ return {
           module = "minuet.blink",
           async = true,
           timeout_ms = 3000,
-          score_ffset = 50,
+          score_offset = 50,
         },
       },
-      completion = { trigger = { prefetch_on_insert = false } },
     },
   },
 }
