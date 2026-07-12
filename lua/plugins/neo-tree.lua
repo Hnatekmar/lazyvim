@@ -2,8 +2,10 @@ return {
   "nvim-neo-tree/neo-tree.nvim",
   opts = {
     -- Disable the source selector panel (filesystem/buffers/git tabs at the top)
-    -- Use :Neotree buffers or :Neotree git_status if you ever need those views
-    source_selector = false,
+    -- Setting this to `false` triggers a neo-tree v3→v4 deprecation migration
+    -- crash, because the migration code tries to traverse source_selector.tab_labels.
+    -- An empty table achieves the same result (no source selector visible).
+    source_selector = {},
     filesystem = {
       filtered_items = {
         visible = true, -- show hidden files (dotfiles)
