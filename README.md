@@ -98,6 +98,8 @@ This configuration is organized for easy customization:
 └── stylua.toml           # Lua formatting config
 ```
 
+> 💡 See [PLUGINS.md](PLUGINS.md) for a complete reference of every plugin in this configuration — what they do, quickstart tips, and links to their original repos.
+
 ### Adding new plugins
 
 Create a new file in `lua/plugins/` and return a plugin spec:
