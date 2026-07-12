@@ -202,9 +202,12 @@ Helm chart templating support with Kubernetes resource stubs and SchemaStore int
 
 - **Quickstart**:
   - `<leader>hs` — Template picker (insert K8s resource stubs)
-  - `<leader>hC` — Live cluster CRD sync
+  - `<leader>hc` — Live cluster CRD sync (pulls schemas from active kubectl context)
+  - `<leader>hC` — Add CRD from file or URL
   - `<leader>hS` — Sync SchemaStore templates
   - `<leader>hk` — Core K8s types
+  - `<leader>hd` — Sync datreeio CRD schemas
+  - `<leader>hx` — Clear schemas
   - Config: `lua/plugins/helm-schemas.lua`
 
 ### [helm-ls.nvim](https://github.com/mrjosh/helm-ls.nvim)
