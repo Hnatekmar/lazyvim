@@ -7,3 +7,6 @@ vim.opt.splitright = true
 vim.opt.scrolloff = 10
 vim.opt.sidescrolloff = 8
 vim.opt.confirm = true
+
+-- Use basedpyright instead of pyright for Python
+vim.g.lazyvim_python_lsp = "basedpyright"
