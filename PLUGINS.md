@@ -66,7 +66,7 @@ A performant, minimal autocompletion UI.
 
 - **Quickstart**:
   - `<Tab>` / `<S-Tab>` — Navigate completion items
-  - `<A-y>` — Trigger AI inline completions (via minuet)
+  - `<A-y>` — Trigger AI inline completions (configured in blink.lua, sources: minuet)
   - Sources: LSP, path, buffer
 - **Repo**: https://github.com/saghen/blink.cmp
 
@@ -362,6 +362,16 @@ For more details on each extra, see the [LazyVim extras documentation](https://g
 | `lua/plugins/noice.lua` | Modern UI (LSP progress disabled) | [noice.nvim](https://github.com/folke/noice.nvim) |
 | `lua/plugins/python.lua` | basedpyright LSP settings | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) |
 | `lua/plugins/yaml.lua` | Multi-schema YAML LSP | [nvim-lspconfig](https://github.com/neovim/nvim-lspconfig) |
+
+## ⌨️ Custom Keymaps
+
+In addition to LazyVim defaults, this config adds these custom keymaps in `lua/config/keymaps.lua`:
+
+| Key | Mode | Action |
+|-----|------|--------|
+| `]q` | Normal | Next quickfix item |
+| `[q` | Normal | Previous quickfix item |
+| `jk` | Terminal | Exit terminal mode |
 
 ---
 
