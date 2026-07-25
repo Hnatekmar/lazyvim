@@ -11,11 +11,20 @@ return {
         end,
       },
     },
+    cmdline = {
+      enabled = false,
+    },
     completion = {
-      trigger = { prefetch_on_insert = false },
+      menu = { auto_show = false },
+      trigger = {
+        prefetch_on_insert = false,
+        show_on_keyword = false,
+        show_on_trigger_character = false,
+        show_on_insert = false,
+      },
     },
     sources = {
-      default = { "lsp", "path", "buffer" },
+      default = { "lsp" },
       providers = {
         minuet = {
           name = "minuet",
