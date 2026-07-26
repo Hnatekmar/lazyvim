@@ -14,8 +14,8 @@ return {
           openai_compatible = {
             api_key = "TERM",
             -- Point to the standard completions route your gateway expects
-            end_point = "http://172.16.100.160:9090/deepseek/v1/chat/completions",
-            model = "deepseek-ai/DeepSeek-V4-Flash",
+            end_point = "https://proxy.personal-hermes.hnatekmar.dev/v1/chat/completions",
+            model = "qwen36-coding",
             name = "vllm",
             stream = true,
             optional = {
