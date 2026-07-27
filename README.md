@@ -2,6 +2,10 @@
 
 A personalized [LazyVim](https://github.com/LazyVim/LazyVim) Neovim configuration optimized for **Python**, **Go**, **Kubernetes**, **Helm**, **Terraform**, and **TypeScript** development.
 
+## 📖 Plugin Documentation
+
+See [PLUGINS.md](PLUGINS.md) for full documentation of all plugins, their purposes, keybindings, and upstream repositories.
+
 ## ✨ Features
 
 - **Python** — basedpyright LSP with tuned diagnostics
