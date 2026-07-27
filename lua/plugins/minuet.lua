@@ -137,6 +137,17 @@ function M.config()
         debounce = 50,
         context_window = 32000,
         add_single_line_entry = false,
+        virtualtext = {
+            auto_trigger_ft = { '*' },
+            keymap = {
+                accept = '<A-A>',
+                accept_line = '<A-a>',
+                accept_n_lines = '<A-z>',
+                next = '<A-]>',
+                prev = '<A-[>',
+                dismiss = '<A-e>',
+            },
+        },
         provider_options = {
             openai_compatible = {
                 api_key = 'TERM',
