@@ -136,9 +136,11 @@ function M.config()
         throttle = 1000,
         debounce = 50,
         context_window = 32000,
+        request_timeout = 5,
         add_single_line_entry = false,
         virtualtext = {
             auto_trigger_ft = { '*' },
+            show_on_completion_menu = false,
             keymap = {
                 accept = '<A-CR>',
                 accept_line = '<A-a>',
@@ -159,7 +161,7 @@ function M.config()
                 chat_input = chat_input,
                 few_shots = mc.default_few_shots_prefix_first,
                 optional = {
-                    max_tokens = 256,
+                    max_tokens = 128,
                 },
             },
         },

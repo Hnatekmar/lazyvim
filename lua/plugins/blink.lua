@@ -25,6 +25,8 @@ return {
     },
     sources = {
       default = { "lsp" },
+      -- Minuet available via manual <A-y> trigger only (dropdown),
+      -- auto-completion handled by virtualtext ghost text.
       providers = {
         minuet = {
           name = "minuet",
