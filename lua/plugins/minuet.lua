@@ -140,7 +140,7 @@ function M.config()
         virtualtext = {
             auto_trigger_ft = { '*' },
             keymap = {
-                accept = '<A-A>',
+                accept = '<A-CR>',
                 accept_line = '<A-a>',
                 accept_n_lines = '<A-z>',
                 next = '<A-n>',
