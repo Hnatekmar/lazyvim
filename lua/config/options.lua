@@ -10,3 +10,12 @@ vim.opt.confirm = true
 
 -- Use basedpyright instead of pyright for Python
 vim.g.lazyvim_python_lsp = "basedpyright"
+
+-- Use neo-tree as the file explorer.
+-- LazyVim v8 defaults to snacks.explorer; pinning this prevents BOTH
+-- neo-tree and the snacks explorer from auto-opening on `nvim .`.
+vim.g.lazyvim_explorer = "neo-tree"
+
+-- Disable netrw to prevent double file explorer on startup
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
