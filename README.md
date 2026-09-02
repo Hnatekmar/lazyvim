@@ -12,6 +12,7 @@ A personalized [LazyVim](https://github.com/LazyVim/LazyVim) Neovim configuratio
 - **Neorg** — Structured note-taking and organization
 - **AI-powered completion** — Mini.ai + blink.cmp + minuet (AI inline completions)
 - **Noice** — Modern UI notifications and command line
+- **AI code review** — hunk-review.nvim: diff vs master, inline comments, export back to the agent
 - **Neo-tree** — File explorer with git status
 - **basedpyright** — Replaces standard pyright for stricter Python analysis
 
