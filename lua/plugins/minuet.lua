@@ -184,7 +184,7 @@ function M.config()
     n_completions = 2,
     throttle = 1000,
     debounce = 50,
-    context_window = 512,
+    context_window = 32000,
     add_single_line_entry = false,
     virtualtext = {
       auto_trigger_ft = { "*" },
@@ -203,12 +203,12 @@ function M.config()
         api_key = function()
           return "noop"
         end,
-        name = "qwen38",
+        name = "instruct",
         end_point = "https://proxy.personal-hermes.hnatekmar.dev/v1/completions",
         model = "instruct",
         stream = true,
         optional = {
-          max_tokens = 512,
+          max_tokens = 64,
           stop = { "<|fim_pad|>", "<|endoftext|>" },
         },
         template = {
