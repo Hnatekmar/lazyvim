@@ -1,6 +1,6 @@
 -- opencode.nvim — Neovim bridge to the opencode AI agent (opencode.ai).
 --
--- Works against opencode's server API rather than scraping the TUI:
+-- Works against opencode's v2 server API rather than scraping the TUI:
 --   - Prompts accept context placeholders (@this, @buffer, @diagnostics,
 --     @marks, @quickfix, @visible) with completion/highlighting in the ask
 --     input (via snacks.input, which LazyVim already enables).
@@ -8,9 +8,10 @@
 --     requests open a side-by-side :diffpatch review tab.
 --   - Prompts/operators are range-aware and dot-repeatable.
 --
--- Requirements: `opencode` >= 1.17 on PATH. Servers must run with `--port`
--- (the snacks.terminal integration below starts one on demand). Verify with
--- `:checkhealth opencode`.
+-- Requirements: `opencode` >= 2.0 on PATH. OpenCode 2 keeps its server in a
+-- background service that the TUI attaches to, so there is no `--port` flag:
+-- the plugin discovers the service through
+-- `~/.local/state/opencode/service.json`. Verify with `:checkhealth opencode`.
 --
 -- Keymaps (the `<leader>a` group, matching LazyVim's AI extras convention):
 --   <leader>aa         Ask OpenCode (@this = selection or cursor position)
@@ -18,20 +19,20 @@
 --   <leader>a,         Append @this to the TUI prompt without submitting
 --   <leader>at         Toggle the opencode TUI (right-side snacks terminal)
 --   <leader>af         Focus the opencode TUI
---   <leader>an         New session
---   <leader>aS         Switch session
---   <leader>ax         Interrupt the running agent
 --   <C-.>              Alias of <leader>at (handy mid-typing)
 --   go (operator)      Append motion/textobject range to the prompt
 --   goo                Append current line
---   <S-C-u>/<S-C-d>    Scroll the opencode session
 --   <a-o> (in picker)  Send selected file(s)/lines to opencode
+--
+-- Session actions (new/switch/interrupt/page) are TUI-side in OpenCode 2 and
+-- have no server API, so they are handled by the TUI's own keys inside the
+-- terminal rather than by maps here.
 --
 -- Unlike the plugin's recommended maps, nothing here shadows Neovim
 -- defaults: <C-a>/<C-x> still increment/decrement. Only the rarely-used
 -- `go` byte-offset jump is shadowed by the operator.
 
-local opencode_cmd = "opencode --port"
+local opencode_cmd = "opencode"
 
 ---@type snacks.terminal.Opts
 local snacks_terminal_opts = {
@@ -44,7 +45,12 @@ local snacks_terminal_opts = {
 return {
   {
     "nickjvandyke/opencode.nvim",
-    version = "*", -- latest stable release
+    -- v2 support is not in a release yet: the newest tag (v1.0.2) speaks the
+    -- v1 API, discovers servers by scanning for `opencode ... --port`
+    -- processes and probes /global/health, none of which exist in OpenCode 2.
+    -- Track main until a v2-capable release is tagged, then go back to
+    -- `version = "*"` and drop the branch.
+    branch = "main",
     init = function()
       ---@type opencode.Opts
       vim.g.opencode_opts = {
@@ -73,43 +79,24 @@ return {
       { "<leader>af", function()
         require("snacks.terminal").focus(opencode_cmd, snacks_terminal_opts)
       end, desc = "Focus OpenCode" },
-      { "<leader>an", function()
-        require("opencode").command("session.new")
-      end, desc = "OpenCode new session" },
-      { "<leader>aS", function()
-        require("opencode").command("session.select")
-      end, desc = "OpenCode switch session" },
-      { "<leader>ax", function()
-        require("opencode").command("session.interrupt")
-      end, desc = "OpenCode interrupt" },
       { "go", function()
         return require("opencode").operator("@this ")
       end, mode = { "n", "x" }, expr = true, desc = "Append range to OpenCode" },
       { "goo", function()
         return require("opencode").operator("@this ") .. "_"
       end, expr = true, desc = "Append line to OpenCode" },
-      { "<S-C-u>", function()
-        require("opencode").command("session.half.page.up")
-      end, desc = "Scroll OpenCode up" },
-      { "<S-C-d>", function()
-        require("opencode").command("session.half.page.down")
-      end, desc = "Scroll OpenCode down" },
       { "<C-.>", function()
         require("snacks.terminal").toggle(opencode_cmd, snacks_terminal_opts)
       end, mode = { "n", "t" }, desc = "Toggle OpenCode" },
     },
     config = function()
-      -- Bring the TUI back into view when a prompt is submitted
+      -- Bring the TUI back into view when OpenCode starts executing
       vim.api.nvim_create_autocmd("User", {
-        pattern = { "OpencodeEvent:tui.command.execute" },
-        callback = function(args)
-          ---@type opencode.server.Event
-          local event = args.data.event
-          if event.properties.command == "prompt.submit" then
-            local win = require("snacks.terminal").get(opencode_cmd, { create = false })
-            if win then
-              win:show()
-            end
+        pattern = { "OpencodeEvent:session.execution.started" },
+        callback = function()
+          local win = require("snacks.terminal").get(opencode_cmd, { create = false })
+          if win then
+            win:show()
           end
         end,
       })
